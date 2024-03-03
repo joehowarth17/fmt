@@ -4,7 +4,7 @@
 #include <parameter.h>
 #include "controlSurface.h"
 
-#define VERSION_STRING  "0.1"
+#define VERSION_STRING  "0.2"
 
 void testParameter(){
 

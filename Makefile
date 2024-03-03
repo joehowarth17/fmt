@@ -11,17 +11,18 @@ SRC := $(wildcard $(SRC_DIR)/*.cpp)
 C_SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(C_SRC:.c=.o) $(SRC:.cpp=.o)
 LIB_OBJ := $(filter-out src/main.o,$(OBJ))
-CPPFLAGS := -Iinclude -MMD -MP -g
+CPPFLAGS := -Iinclude -MMD -MP -g -I$(LIB_DIR)/spdlog/include
 CFLAGS   := -Wall -std=c++17 -I/usr/local/include -I$(LIB_DIR)/spdlog/include
 LDFLAGS  := -Llib/spdlog -L/usr/local/lib 
-LDLIBS   := -lm -lgpiodcxx -lstdc++fs -lpthread -lspdlog
+#LDLIBS   := -lm -lgpiodcxx -lstdc++fs -lpthread -lspdlog
+LDLIBS   := -lm -lstdc++fs -lpthread -lspdlog
 
 .PHONY: all clean
 
 all: $(EXE)
 
 $(EXE): $(OBJ) | $(BIN_DIR)
-	g++ $(LDFLAGS) $^ $(LDLIBS) -o $@
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@

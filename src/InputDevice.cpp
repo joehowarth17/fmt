@@ -6,7 +6,7 @@
 #include <linux/input.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <spdlog/spdlog.h>
+#include "spdlog/spdlog.h"
 
 
 InputDevice::InputDevice(char *path)
