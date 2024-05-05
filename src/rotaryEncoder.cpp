@@ -17,7 +17,7 @@
 #define BITS_PER_LONG (sizeof(long) * 8)
 #define NBITS(x) ((((x)-1)/BITS_PER_LONG)+1)
 
-RotaryEncoder::RotaryEncoder(char* rotaryEvent): InputDevice(rotaryEvent){
+RotaryEncoder::RotaryEncoder(std::string name, char* rotaryEvent): InputDevice(rotaryEvent), Control (name){
 
 }
 

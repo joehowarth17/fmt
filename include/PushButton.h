@@ -8,7 +8,7 @@ class PushButton : public Control, public InputDevice{
 
 public:
 
- PushButton(char*  buttonEvent, int keycode);
+ PushButton(std::string name, char*  buttonEvent, int keycode);
 
 
 private:

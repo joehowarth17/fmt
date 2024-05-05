@@ -5,7 +5,7 @@
 class RotaryEncoder : public Control,public InputDevice{
 
 public:
-    RotaryEncoder(char* rotaryEvent); 
+    RotaryEncoder(std::string name, char* rotaryEvent); 
 
 private:
     void processInput(input_event* ev);

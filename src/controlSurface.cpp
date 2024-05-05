@@ -1,4 +1,6 @@
 #include "controlSurface.h"
+#include <iostream>
+#include <format>
 
 ControlSurface::ControlSurface()
 {
@@ -10,7 +12,7 @@ int ControlSurface::addControl(Control *Control)
     return 0;
 }
 
-int ControlSurface::addParameter(Parameter *parameter)
+int ControlSurface::addParameter(Parameter* parameter)
 {
     params.push_back(parameter);
     return 0;
@@ -35,4 +37,13 @@ int ControlSurface::assign(std::string paramName, int controlId)
 int ControlSurface::remove(std::string parmamName, int controlId)
 {
     return 0;
+}
+
+
+void ControlSurface::printControlSurface(){
+
+        for(int i=0; i< ctrls.size(); i++){
+
+            std::cout << std::format("Control: {} assigned parameter {}\n",(void*)ctrls[i], ctrls[i]->getParameter()->getName());
+        }
 }

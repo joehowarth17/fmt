@@ -30,7 +30,7 @@ int main(int argc, char** argv){
 
 
     printf("effectControl V%s\n",VERSION_STRING);
-    RotaryEncoder rot1("/dev/input/event1");
+    RotaryEncoder rot1("rot 1","/dev/input/event1");
     rot1.Init();
     rot1.start();
 

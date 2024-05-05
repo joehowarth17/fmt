@@ -1,6 +1,8 @@
 #include "parameter.h"
+#include <iostream>
+#include <format>
 
-Parameter::Parameter(std::string paramName,float startVal, float min, float max, float increment)
+Parameter::Parameter(std::string paramName,double startVal, double min, double max, double increment)
 {
     init = startVal;
     _min = min;
@@ -9,7 +11,7 @@ Parameter::Parameter(std::string paramName,float startVal, float min, float max,
     name = paramName;
 
     if(startVal>_max || startVal<_min){
-        printf("warning: parameter %s default value outside range [%f,%f]\n",name,min,max);
+        std::cout << std::format("warning: parameter {} default value outside range [ {} , {} ]\n",name,min,max);
     }
 
     reset();
@@ -25,50 +27,65 @@ void Parameter::increment()
     increment(incrementCoarse);
 }
 
+
 void Parameter::decrement()
 {
     decrement(incrementCoarse);
 }
 
-void Parameter::increment(float step)
+void Parameter::increment(double step)
 {   
     if(value + step <= _max){
          value += step;
+    }else if(wrap){
+            value = (value+step) - (_max-_min+1);
     }else{
         value = _max;
     }
-    printf("%s: %f\n",name.c_str(),value);
+   std::cout << std::format("{}: {}\n",name.c_str(),value);
 }
 
-void Parameter::decrement(float step)
+
+void Parameter::decrement(double step)
 {
-        if(value - step >= _min){ 
+    if(value - step >= _min){ 
         value -= step;  
-    }
-    else{
+    }else if(wrap){
+        value = (value-step) + (_max-_min+1);
+    }else{
         value = _min;
     }
-    printf("%s: %f\n",name.c_str(),value);
+    std::cout << std::format("{}: {}\n",name.c_str(),value);
 }
 
-float Parameter::getValue()
+
+double Parameter::getValue()
 {
     return value;
 }
 
-int Parameter::setValue(float val)
+int Parameter::setValue(double val)
 {
     if(val <= _max && val >= _min){
         value = val;
         return 0;
     }
     else{
-        printf("Can't set parameter %s to %f, since outside range\n",name,val);
+        std::cout << std::format("Can't set parameter {} to {}, since outside range\n",name,val);
         return -1;
     }
 }
 
-std::string Parameter::getName()
-{
+std::string Parameter::getName(){ 
     return name;
+    
+}
+
+void Parameter::setWrap(bool val){
+
+    wrap = val;
+}
+bool Parameter::getWrap(){
+
+    return wrap;
 }
