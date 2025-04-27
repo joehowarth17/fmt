@@ -1,6 +1,6 @@
 #include "controlSurface.h"
 #include <iostream>
-#include <format>
+#include <fmt/format.h>
 
 ControlSurface::ControlSurface()
 {
@@ -44,6 +44,6 @@ void ControlSurface::printControlSurface(){
 
         for(int i=0; i< ctrls.size(); i++){
 
-            std::cout << std::format("Control: {} assigned parameter {}\n",(void*)ctrls[i], ctrls[i]->getParameter()->getName());
+            std::cout << fmt::format("Control: {} assigned parameter {}\n",(void*)ctrls[i], ctrls[i]->getParameter()->getName());
         }
 }

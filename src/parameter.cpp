@@ -1,6 +1,6 @@
 #include "parameter.h"
 #include <iostream>
-#include <format>
+#include <fmt/format.h>
 
 Parameter::Parameter(std::string paramName,double startVal, double min, double max, double increment)
 {
@@ -11,7 +11,7 @@ Parameter::Parameter(std::string paramName,double startVal, double min, double m
     name = paramName;
 
     if(startVal>_max || startVal<_min){
-        std::cout << std::format("warning: parameter {} default value outside range [ {} , {} ]\n",name,min,max);
+        std::cout << fmt::format("warning: parameter {} default value outside range [ {} , {} ]\n",name,min,max);
     }
 
     reset();
@@ -42,7 +42,7 @@ void Parameter::increment(double step)
     }else{
         value = _max;
     }
-   std::cout << std::format("{}: {}\n",name.c_str(),value);
+   std::cout << fmt::format("{}: {}\n",name.c_str(),value);
 }
 
 
@@ -55,7 +55,7 @@ void Parameter::decrement(double step)
     }else{
         value = _min;
     }
-    std::cout << std::format("{}: {}\n",name.c_str(),value);
+    //std::cout << std::format("{}: {}\n",name.c_str(),value);
 }
 
 
@@ -71,7 +71,7 @@ int Parameter::setValue(double val)
         return 0;
     }
     else{
-        std::cout << std::format("Can't set parameter {} to {}, since outside range\n",name,val);
+        //std::cout << std::format("Can't set parameter {} to {}, since outside range\n",name,val);
         return -1;
     }
 }

@@ -11,12 +11,20 @@ SRC := $(wildcard $(SRC_DIR)/*.cpp)
 C_SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(C_SRC:.c=.o) $(SRC:.cpp=.o)
 LIB_OBJ := $(filter-out src/main.o,$(OBJ))
-CPPFLAGS :=  -Iinclude -MMD -MP -g -I$(LIB_DIR)/spdlog/include -std=c++20
-CFLAGS   :=  -Wall -std=c++20 -I/usr/local/include -I$(LIB_DIR)/spdlog/include 
+CPPFLAGS :=  -Iinclude -MMD -MP -g -I$(LIB_DIR)/spdlog/include 
+CFLAGS   :=  -Wall  -I/usr/local/include -I$(LIB_DIR)/spdlog/include 
 #LDFLAGS  := -Llib/spdlog -L/usr/local/lib 
 LDFLAGS  := -Llib/spdlog -L~/~/opt/x-tools/armv8-rpi3-linux-gnueabihf/armv8-rpi3-linux-gnueabihf/sysroot/usr/local/
 #LDLIBS   := -lm -lgpiodcxx -lstdc++fs -lpthread -lspdlog
 LDLIBS   := -lm -lstdc++fs -lspdlog -lpthread
+
+CC=arm-none-eabi-g++
+CXX=arm-none-eabi-g++
+CPU = -mcpu=cortex-m7
+FPU = -mfpu=fpv5-d16
+FLOAT-ABI = -mfloat-abi=hard
+MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
+CFLAGS_M7 += $(MCU) $(C_DEFS) $(OPT) -Iinclude -Wall -fdata-sections -ffunction-sections
 
 .PHONY: all clean
 
@@ -26,7 +34,7 @@ $(EXE): $(OBJ) | $(BIN_DIR)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAG_M7) -c $< -o $@
 
 
 $(BIN_DIR) $(OBJ_DIR):

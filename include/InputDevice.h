@@ -2,6 +2,7 @@
 #define INPUT_DEVICE_H_
 
 #include <pthread.h>
+#ifdef LINUX
 #include <linux/input.h>
 
 class InputDevice{
@@ -29,4 +30,5 @@ protected:
 
 };
 
+#endif
 #endif

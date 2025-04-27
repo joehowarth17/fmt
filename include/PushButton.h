@@ -3,7 +3,7 @@
 
 #include "Control.h"
 #include "InputDevice.h"
-
+#ifdef LINUX
 class PushButton : public Control, public InputDevice{
 
 public:
@@ -19,4 +19,5 @@ private:
 
 };
 
+#endif
 #endif
