@@ -2,12 +2,12 @@
 #include "Control.h"
 #include "InputDevice.h"
 
-class RotaryEncoder : public Control,public InputDevice{
+class RotaryEncoder : public Control{
 
 public:
-    RotaryEncoder(std::string name, char* rotaryEvent); 
+    RotaryEncoder(std::string name); 
 
-private:
-    void processInput(input_event* ev);
+protected:
+    virtual void processInput(void* ev);
 
 };
