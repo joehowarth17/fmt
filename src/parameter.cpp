@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fmt/format.h>
 
-Parameter::Parameter(std::string paramName,double startVal, double min, double max, double increment)
+Parameter::Parameter(std::string paramName,float startVal, float min, float max, float increment)
 {
     init = startVal;
     _min = min;
@@ -33,7 +33,7 @@ void Parameter::decrement()
     decrement(incrementCoarse);
 }
 
-void Parameter::increment(double step)
+void Parameter::increment(float step)
 {   
     if(value + step <= _max){
          value += step;
@@ -42,11 +42,19 @@ void Parameter::increment(double step)
     }else{
         value = _max;
     }
-   std::cout << fmt::format("{}: {}\n",name.c_str(),value);
+   std::cout << fmt::format("{}: {} ({})\n",name.c_str(),value,step);
 }
 
+void Parameter::incrementMultiple(int steps){
 
-void Parameter::decrement(double step)
+    if(steps>0){
+        increment(steps*incrementCoarse);
+    }else{
+        decrement((-steps)*incrementCoarse);
+    }
+}
+
+void Parameter::decrement(float step)
 {
     if(value - step >= _min){ 
         value -= step;  
@@ -55,16 +63,16 @@ void Parameter::decrement(double step)
     }else{
         value = _min;
     }
-    //std::cout << std::format("{}: {}\n",name.c_str(),value);
+    std::cout << fmt::format("{}: {} ({})\n",name.c_str(),value,step);
 }
 
 
-double Parameter::getValue()
+float Parameter::getValue()
 {
     return value;
 }
 
-int Parameter::setValue(double val)
+int Parameter::setValue(float val)
 {
     if(val <= _max && val >= _min){
         value = val;

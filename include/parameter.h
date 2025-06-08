@@ -3,33 +3,42 @@
 
 #include <string>
 
+
+
 class Parameter{
 
     public:
 
-    Parameter(std::string paramName,double startVal,double min,double max,double increment);
+    Parameter(std::string paramName,float startVal,float min,float max,float increment);
 
-    void reset();
-    void increment();
-    void decrement();
-    void increment(double step);
-    void decrement(double step);
-    double getValue();
-    int setValue(double val);
-    std::string getName();
-    void setWrap(bool val);
-    bool getWrap();
+    virtual void reset();
+    virtual void increment();
+    virtual void decrement();
+    virtual void incrementMultiple(int steps);
+    virtual void increment(float step);
+    virtual void decrement(float step);
+    virtual float getValue();
+    virtual int setValue(float val);
+    virtual std::string getName();
+    virtual void setWrap(bool val);
+    virtual bool getWrap();
     
     private:
 
     std::string name;
-    double value;
-    double init;
-    double _max,_min;
-    double incrementFine;
-    double incrementCoarse;
+    float value;
+    float init;
+    float _max,_min;
+    float incrementFine;
+    float incrementCoarse;
     bool wrap = false;
 
 };
+
+// template <class T>
+// class ParameterType<T>: public Parameter{
+
+
+// };
 
 #endif
