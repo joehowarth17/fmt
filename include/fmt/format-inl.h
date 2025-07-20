@@ -1480,7 +1480,7 @@ template <typename F = FILE, typename Enable = void>
 struct has_flockfile : std::false_type {};
 
 template <typename F>
-struct has_flockfile<F, void_t<decltype(flockfile(&std::declval<F&>()))>>
+struct has_flockfile<F, void_t<decltype(__STDIO_LOCK(&std::declval<F&>()))>>
     : std::true_type {};
 
 // A FILE wrapper. F is FILE defined as a template parameter to make system API
