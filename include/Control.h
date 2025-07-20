@@ -23,7 +23,7 @@ public:
 
 protected:
     
-    Parameter* param;
+    Parameter* param = NULL;
     std::string name;
 };
 
