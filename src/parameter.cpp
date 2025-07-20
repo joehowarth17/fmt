@@ -67,6 +67,7 @@ double Parameter::getValue()
 int Parameter::setValue(double val)
 {
     if(val <= _max && val >= _min){
+        if(val !=  value) printf("parameter %s changed: %f -> %f \n\r",name.c_str(),value,val);
         value = val;
         return 0;
     }
