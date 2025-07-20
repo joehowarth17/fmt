@@ -79,6 +79,8 @@ time formatting and [`fmt/std.h`](#std-api) for other standard library types.
 
 There are two ways to make a user-defined type formattable: providing a
 `format_as` function or specializing the `formatter` struct template.
+Formatting of non-void pointer types is intentionally disallowed and they
+cannot be made formattable via either extension API.
 
 Use `format_as` if you want to make your type formattable as some other
 type with the same format specifiers. The `format_as` function should
@@ -220,7 +222,7 @@ You can also write a formatter for a hierarchy of classes:
 ```c++
 // demo.h:
 #include <type_traits>
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 struct A {
   virtual ~A() {}
@@ -403,7 +405,7 @@ All formatting is locale-independent by default. Use the `'L'` format
 specifier to insert the appropriate number separator characters from the
 locale:
 
-    #include <fmt/core.h>
+    #include <fmt/format.h>
     #include <locale>
 
     std::locale::global(std::locale("en_US.UTF-8"));
@@ -473,9 +475,9 @@ chrono-format-specifications).
     #include <fmt/chrono.h>
 
     int main() {
-      std::time_t t = std::time(nullptr);
+      auto now = std::chrono::system_clock::now();
 
-      fmt::print("The date is {:%Y-%m-%d}.", fmt::localtime(t));
+      fmt::print("The date is {:%Y-%m-%d}.\n", now);
       // Output: The date is 2020-11-07.
       // (with 2020-11-07 replaced by the current date)
 
@@ -487,8 +489,6 @@ chrono-format-specifications).
       fmt::print("strftime-like format: {:%H:%M:%S}\n", 3h + 15min + 30s);
       // Output: strftime-like format: 03:15:30
     }
-
-::: localtime(std::time_t)
 
 ::: gmtime(std::time_t)
 
@@ -580,7 +580,7 @@ performance bottleneck.
 
 `fmt/color.h` provides support for terminal color and text style output.
 
-::: print(const text_style&, format_string<T...>, T&&...)
+::: print(text_style, format_string<T...>, T&&...)
 
 ::: fg(detail::color_type)
 
